@@ -1,7 +1,7 @@
 package com.example.heroku.controller;
 
-import com.example.heroku.model.Greeting;
-import com.example.heroku.model.HelloMessage;
+import com.example.heroku.domain.Greeting;
+import com.example.heroku.domain.HelloMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.example.heroku.model;
+package com.example.heroku.domain;
 
 public class HelloMessage {
 
