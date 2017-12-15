@@ -2,9 +2,10 @@ package com.example.heroku.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 @Entity
-public class Comments {
+public class Comment {
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "comment_id")
@@ -12,6 +13,8 @@ public class Comments {
 
 	@NotNull
 	private String comment;
+
+	private String timestamp;
 
 	public String getComment() {
 		return comment;
@@ -29,11 +32,20 @@ public class Comments {
 		this.id = id;
 	}
 
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	@Override
 	public String toString() {
-		return "Comments{" +
+		return "Comment{" +
 				"id=" + id +
 				", comment='" + comment + '\'' +
+				", timestamp=" + timestamp +
 				'}';
 	}
 }

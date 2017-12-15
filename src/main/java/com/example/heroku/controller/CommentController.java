@@ -1,6 +1,6 @@
 package com.example.heroku.controller;
 
-import com.example.heroku.model.Comments;
+import com.example.heroku.model.Comment;
 import com.example.heroku.repository.CommentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,31 +25,32 @@ public class CommentController  {
 	private CommentRepository commentRepository;
 
 	@RequestMapping(method = RequestMethod.POST, path = "/add")
-	public ResponseEntity addComment(@RequestBody Comments comments) {
-		if (comments == null) {
+	public ResponseEntity addComment(@RequestBody Comment comment) {
+		if (comment == null) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
-		commentRepository.save(comments);
+		commentRepository.save(comment);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@MessageMapping("/comment/add")
 	@SendTo("/topic/comments")
-	public Comments addWebSocketComment(Comments comments) {
-		commentRepository.save(comments);
-		return comments;
+	public Comment addWebSocketComment(Comment comment) {
+		log.info("Comment: " + comment);
+		commentRepository.save(comment);
+		return comment;
 	}
 
 	@MessageMapping("/comment/delete")
 	@SendTo("/topic/comments_deleted")
-	public Comments deleteWebsocketComment(Long commentId) {
-		Comments comment = commentRepository.findOne(commentId);
+	public Comment deleteWebsocketComment(Long commentId) {
+		Comment comment = commentRepository.findOne(commentId);
 		commentRepository.delete(commentId);
 		return comment;
 	}
 
 	@SubscribeMapping("/comments")
-	public Iterable<Comments> initComment() {
+	public Iterable<Comment> initComment() {
 		log.info("Cliente subscribed");
 		return commentRepository.findAll();
 	}
